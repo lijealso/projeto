@@ -5,6 +5,8 @@ import re
 
 app = Flask(__name__)
 
+app.secret_key = 'segredo'
+
 # Informação para conexão à base de dados
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
