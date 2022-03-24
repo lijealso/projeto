@@ -20,4 +20,9 @@ mysql = MySQL(app)
 def login():
     # Mensagem de output
     msg = ''
+        # Verificar se campos estão preenchidos
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+        # Criação de variáveis
+        username = request.form['username']
+        password = request.form['password']
     return render_template('index.html', msg='')
