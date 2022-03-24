@@ -41,3 +41,14 @@ def login():
             # Conta não existente ou dados incorretos
             msg = 'Dados incorretos!'
     return render_template('index.html', msg='')
+
+# http://localhost:5000/logout
+# Página de logout
+@app.route('/logout')
+def logout():
+    # Remover dados de sessão
+   session.pop('loggedin', None)
+   session.pop('id', None)
+   session.pop('username', None)
+   # Redirect to login page
+   return redirect(url_for('login'))
