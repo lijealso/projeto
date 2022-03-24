@@ -130,7 +130,7 @@ def update():
             if account:
                 msg = 'A conta já existe!'
             else:
-                cursor.execute('UPDATE accounts SET username = %s, email = %s WHERE id = %s', (username, email, password, (session['id'], )))
+                cursor.execute('UPDATE accounts SET username = %s, email = %s, password = %s WHERE id = %s', (username, email, password, (session['id'], )))
                 mysql.connection.commit()
                 msg = 'Dados atualizados com sucesso!'
         elif request.method == 'POST':
