@@ -114,3 +114,26 @@ def profile():
         # Mostra a página de perfil com a informação da conta
         return render_template('profile.html', account=account)
     return redirect(url_for('login'))
+
+@app.route("/update", methods =['GET', 'POST'])
+def update():
+    msg = ''
+    if 'loggedin' in session:
+        if request.method == 'POST' and 'username' in request.form and 'email' in request.form and 'password' in request.form:
+            username = request.form['username']
+            email = request.form['email']
+            password = request.form['password']
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM users WHERE username = % s', (username, ))
+            account = cursor.fetchone()
+            # Validações e erros
+            if account:
+                msg = 'A conta já existe!'
+            else:
+                cursor.execute('UPDATE users SET username = %s, email = %s WHERE id = %s', (username, email, password, (session['id'], )))
+                mysql.connection.commit()
+                msg = 'Dados atualizados com sucesso!'
+        elif request.method == 'POST':
+            msg = 'Por favor preencha o formulário!'
+        return render_template("update.html", msg = msg)
+    return redirect(url_for('login'))
