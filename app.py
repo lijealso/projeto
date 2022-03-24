@@ -30,6 +30,12 @@ def login():
         cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password,))
         # Retorna resultado
         account = cursor.fetchone()
-
+        if account:
+            # Criar dados de sessão
+            session['loggedin'] = True
+            session['id'] = account['id']
+            session['username'] = account['username']
+            # Redirecionar para página principal
+            return 'Login efetuado com sucesso!'
 
     return render_template('index.html', msg='')
