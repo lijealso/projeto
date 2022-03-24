@@ -55,7 +55,7 @@ def logout():
 
 # http://localhost:5000/register
 # Página de registo
-@app.route('/pythonlogin/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     # Mensagem de output
     msg = ''
