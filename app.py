@@ -14,7 +14,7 @@ app.config['MYSQL_DB'] = 'projeto'
 # Inicializar MySQL
 mysql = MySQL(app)
 
-# http://localhost:5000/login/ - 
+# http://localhost:5000/login/
 # Página de login
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
