@@ -98,3 +98,17 @@ def home():
         return render_template('home.html', username=session['username'])
     # Redirect
     return redirect(url_for('login'))
+
+# http://localhost:5000/profile
+# Página de perfil
+@app.route('/profile')
+def profile():
+    # Verificar se utilizar fez login
+    if 'loggedin' in session:
+        # Buscar à base de dados a informação da conta
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM accounts WHERE id = %s', (session['id'],))
+        account = cursor.fetchone()
+        # Mostra a página de perfil com a informação da conta
+        return render_template('profile.html', account=account)
+    return redirect(url_for('login'))
