@@ -87,3 +87,14 @@ def register():
         # Formulário vazio
         msg = 'Please fill out the form!'
     return render_template('register.html', msg=msg)
+
+# http://localhost:5000/home
+# Página principal
+@app.route('/home')
+def home():
+    # VErificar se utilizar fez login
+    if 'loggedin' in session:
+        # Mostrar a página principal
+        return render_template('home.html', username=session['username'])
+    # Redirect
+    return redirect(url_for('login'))
