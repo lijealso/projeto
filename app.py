@@ -124,7 +124,7 @@ def update():
             email = request.form['email']
             password = request.form['password']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM users WHERE username = % s', (username, ))
+            cursor.execute('SELECT * FROM accounts WHERE username = % s', (username, ))
             account = cursor.fetchone()
             # Validações e erros
             if account:
