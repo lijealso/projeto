@@ -36,7 +36,7 @@ def login():
             session['id'] = account['id']
             session['username'] = account['username']
             # Redirecionar para página principal
-            return 'Login efetuado com sucesso!'
+            return redirect(url_for('home'))
         else:
             # Conta não existente ou dados incorretos
             msg = 'Dados incorretos!'
