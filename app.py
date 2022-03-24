@@ -25,4 +25,11 @@ def login():
         # Criação de variáveis
         username = request.form['username']
         password = request.form['password']
+        # Verificar se a conta existe
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password,))
+        # Retorna resultado
+        account = cursor.fetchone()
+
+
     return render_template('index.html', msg='')
