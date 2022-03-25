@@ -12,7 +12,8 @@ body {
 }
 
 .login,
-.register {
+.register,
+.addquestions {
     width: 400px;
     background-color: #ffffff;
     box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
@@ -20,12 +21,13 @@ body {
 }
 
 .login h1,
-.register h1 {
+.register h1,
+.addquestions h1 {
     text-align: center;
-    color: #5b6574;
+    color: #256dd8;
     font-size: 24px;
     padding: 20px 0 20px 0;
-    border-bottom: 1px solid #dee0e4;
+    border-bottom: 3px solid #256dd8;
 }
 
 .login .links,
@@ -45,7 +47,7 @@ body {
 
 .login .links a:hover,
 .register .links a:hover {
-    color: #9da3ac;
+    color: #b4279d;
 }
 
 .login .links a.active,
@@ -55,7 +57,8 @@ body {
 }
 
 .login form,
-.register form {
+.register form,
+.addquestions form {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -63,14 +66,15 @@ body {
 }
 
 .login form label,
-.register form label {
+.register form label,
+.addquestions form label {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 55px;
     background-color: #3274d6;
-    color: #ffffff;
+    color: #d10e0e;
 }
 
 .login form input[type="password"],
@@ -78,16 +82,20 @@ body {
 .login form input[type="email"],
 .register form input[type="password"],
 .register form input[type="text"],
-.register form input[type="email"] {
-    width: 310px;
-    height: 50px;
-    border: 1px solid #dee0e4;
+.register form input[type="email"],
+.addquestions form input[type="text"],
+.addquestions form input[type="number"],
+.addquestions form input[type="datetime"] {
+    width: 320px;
+    height: 55px;
+    border: 3px solid #3274d6;
     margin-bottom: 20px;
     padding: 0 15px;
 }
 
 .login form input[type="submit"],
-.register form input[type="submit"] {
+.register form input[type="submit"],
+.addquestions form input[type="submit"] {
     width: 100%;
     padding: 15px;
     margin-top: 20px;
@@ -100,13 +108,14 @@ body {
 }
 
 .login form input[type="submit"]:hover,
-.register form input[type="submit"]:hover {
-    background-color: #2868c7;
+.register form input[type="submit"]:hover,
+.addquestions form input[type="submit"]:hover {
+    background-color: #d41996;
     transition: background-color 0.2s;
 }
 
 .navtop {
-    background-color: #2f3947;
+    background-color: #1e65c8;
     height: 60px;
     width: 100%;
     border: 0;
@@ -127,7 +136,7 @@ body {
 
 .navtop div h1 {
     flex: 1;
-    font-size: 24px;
+    font-size: 34px;
     padding: 0;
     margin: 0;
     color: #eaebed;
@@ -146,7 +155,7 @@ body {
 }
 
 .navtop div a:hover {
-    color: #eaebed;
+    color: #db1d7c;
 }
 
 body.loggedin {
@@ -161,14 +170,14 @@ body.loggedin {
 .content h2 {
     margin: 0;
     padding: 25px 0;
-    font-size: 22px;
-    border-bottom: 1px solid #e0e0e3;
+    font-size: 20px;
+    border-bottom: 3px solid #505091;
     color: #4a536e;
 }
 
 .content>p,
 .content>div {
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px 0 rgba(175, 20, 20, 0.1);
     margin: 25px 0;
     padding: 25px;
     background-color: #fff;

@@ -137,3 +137,30 @@ def update():
             msg = 'Por favor preencha o formulário!'
         return render_template("update.html", msg = msg)
     return redirect(url_for('login'))
+
+# http://localhost:5000/addquestions
+# Página de perfil
+@app.route('/addquestions', methods =['GET', 'POST'])
+def addquestions():
+    msg = ''
+    if 'loggedin' in session:
+        # Verificar se dados estão preenchidos
+        if request.method == 'POST' and 'quizId' in request.form and 'type' in request.form and 'active' in request.form and 'level' in request.form and 'score' in request.form and 'createdAt' in request.form and 'updatedAt' in request.form and 'content' in request.form:
+            # Criar variáveis
+            quizId = request.form['quizId']
+            type = request.form['type']
+            active = request.form['active']
+            level = request.form['level']
+            score = request.form['score']
+            createdAt = request.form['createdAt']
+            updatedAt = request.form['updatedAt']
+            content = request.form['content']
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('INSERT INTO quiz_question VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s)', (quizId, type, active, level, score, createdAt, updatedAt, content, ))
+            mysql.connection.commit()
+            msg = 'Questão adicionada'
+        elif request.method == 'POST':
+            # Formulário vazio
+            msg = 'Preencha os dados!'
+        return render_template('addquestions.html', msg=msg)
+    return redirect(url_for(addquestions))
