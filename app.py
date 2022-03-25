@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
+from dbconnect import connection
 
 app = Flask(__name__)
 
@@ -164,3 +165,15 @@ def addquestions():
             msg = 'Preencha os dados!'
         return render_template('addquestions.html', msg=msg)
     return redirect(url_for(addquestions))
+
+@app.route('/list_users')       
+def display_users():
+    if 'loggedin' in session:
+        c, conn = connection()
+        query = "SELECT * from accounts"
+        c.execute(query)
+        data = c.fetchall()
+        conn.close()
+        return render_template("list_users.html", data=data)
+    return redirect(url_for('login'))
+
