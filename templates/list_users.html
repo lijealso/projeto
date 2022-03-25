@@ -1,0 +1,42 @@
+<!DOCTYPE html> {% extends "base.html" %} {% block content %}
+
+<table id="data" class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome de utilizador</th>
+            <th>email</th>
+            <th>Password</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+        <tr>
+            {% for d in row %}
+            <td>{{ d }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %} {% block scripts %}
+<script>
+    $(document).ready(function() {
+        $('#data').DataTable({
+            columns: [{
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }],
+        });
+    });
+</script>
+{% endblock %}
