@@ -1,7 +1,7 @@
 * {
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -13,8 +13,9 @@ body {
 
 .login,
 .register,
-.addquestions {
-    width: 400px;
+.addquestions,
+.addanswers {
+    width: 450px;
     background-color: #ffffff;
     box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
     margin: 100px auto;
@@ -22,7 +23,8 @@ body {
 
 .login h1,
 .register h1,
-.addquestions h1 {
+.addquestions h1,
+.addanswers h1 {
     text-align: center;
     color: #256dd8;
     font-size: 24px;
@@ -58,7 +60,8 @@ body {
 
 .login form,
 .register form,
-.addquestions form {
+.addquestions form,
+.addanswers form {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -67,7 +70,8 @@ body {
 
 .login form label,
 .register form label,
-.addquestions form label {
+.addquestions form label,
+.addanswers form label {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,9 +89,12 @@ body {
 .register form input[type="email"],
 .addquestions form input[type="text"],
 .addquestions form input[type="number"],
-.addquestions form input[type="datetime"] {
+.addquestions form input[type="datetime"]
+.addanswers form input[type="text"],
+.addanswers form input[type="number"],
+.addanswers form input[type="datetime"] {
     width: 320px;
-    height: 55px;
+    height: 45px;
     border: 3px solid #3274d6;
     margin-bottom: 20px;
     padding: 0 15px;
@@ -95,7 +102,8 @@ body {
 
 .login form input[type="submit"],
 .register form input[type="submit"],
-.addquestions form input[type="submit"] {
+.addquestions form input[type="submit"],
+.addanswers form input[type="submit"] {
     width: 100%;
     padding: 15px;
     margin-top: 20px;
@@ -109,14 +117,15 @@ body {
 
 .login form input[type="submit"]:hover,
 .register form input[type="submit"]:hover,
-.addquestions form input[type="submit"]:hover {
+.addquestions form input[type="submit"]:hover,
+.addanswers form input[type="submit"]:hover {
     background-color: #d41996;
     transition: background-color 0.2s;
 }
 
 .navtop {
     background-color: #1e65c8;
-    height: 60px;
+    height: 30px;
     width: 100%;
     border: 0;
 }
@@ -178,8 +187,8 @@ body.loggedin {
 .content>p,
 .content>div {
     box-shadow: 0 0 5px 0 rgba(175, 20, 20, 0.1);
-    margin: 25px 0;
-    padding: 25px;
+    margin: 15px 0;
+    padding: 15px;
     background-color: #fff;
 }
 
@@ -196,6 +205,8 @@ body.loggedin {
 }
 
 .content>div p {
-    padding: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px;
     margin: 0 0 10px 0;
 }
