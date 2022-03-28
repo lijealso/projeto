@@ -1,0 +1,87 @@
+<!DOCTYPE html> {% extends "base.html" %} {% block content %}
+
+<table id="data" class="table table-striped">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>hostId</th>
+            <th>title</th>
+            <th>metaTitle</th>
+            <th>slug</th>
+            <th>summary</th>
+            <th>type</th>
+            <th>score</th>
+            <th>published</th>
+            <th>createdAt</th>
+            <th>updatedAt</th>
+            <th>publishedAt</th>
+            <th>startsAt</th>
+            <th>endsAt</th>
+            <th>content</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+        <tr>
+            {% for d in row %}
+            <td>{{ d }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %} {% block scripts %}
+<script>
+    $(document).ready(function() {
+        $('#data').DataTable({
+            columns: [{
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }, {
+                orderable: true,
+                searchable: true
+            }],
+        });
+    });
+</script>
+{% endblock %}
