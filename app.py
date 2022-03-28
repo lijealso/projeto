@@ -130,7 +130,7 @@ def update():
             email = request.form['email']
             password = request.form['password']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM accounts WHERE username = % s', (username, ))
+            cursor.execute('SELECT * FROM accounts WHERE username = %s', (username, ))
             account = cursor.fetchone()
             # Validações e erros
             if account:
@@ -201,7 +201,7 @@ def addanswers():
 def display_users():
     if 'loggedin' in session:
         c, conn = connection()
-        query = "SELECT * from accounts"
+        query = "SELECT * FROM accounts"
         c.execute(query)
         data = c.fetchall()
         conn.close()
@@ -212,7 +212,7 @@ def display_users():
 def display_questions():
     if 'loggedin' in session:
         c, conn = connection()
-        query = "SELECT * from quiz_question"
+        query = "SELECT * FROM quiz_question"
         c.execute(query)
         data = c.fetchall()
         conn.close()
@@ -223,7 +223,7 @@ def display_questions():
 def display_answers():
     if 'loggedin' in session:
         c, conn = connection()
-        query = "SELECT * from quiz_answer"
+        query = "SELECT * FROM quiz_answer"
         c.execute(query)
         data = c.fetchall()
         conn.close()
@@ -234,7 +234,7 @@ def display_answers():
 def display_quizzes():
     if 'loggedin' in session:
         c, conn = connection()
-        query = "SELECT * from quiz"
+        query = "SELECT * FROM quiz"
         c.execute(query)
         data = c.fetchall()
         conn.close()
@@ -245,7 +245,13 @@ def display_quizzes():
 def display_teste():
     if 'loggedin' in session:
         c, conn = connection()
-        query1 = "SELECT id,content,score from quiz_question"
+        query = "SELECT COUNT(id) FROM quiz"
+        c.execute(query)
+        number_quizzes = c.fetchone()
+        number_quizzes2 = number_quizzes[0]
+        # escolher, aleatoriamente, quiz dentro da quantidade existente
+        random_quiz = random.randint(1, number_quizzes2)
+        query1 = "SELECT id,content,score FROM quiz_question WHERE quizId = %s" % random_quiz
         c.execute(query1)
         questions_data = c.fetchall()
         query2 = "SELECT questionId,content FROM quiz_answer"
@@ -271,3 +277,4 @@ def display_teste():
 
         return render_template("teste.html", questions = questions)
     return redirect(url_for('login'))
+
