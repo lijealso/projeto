@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Adicionar respostas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+</head>
+
+<body class="loggedin">
+    <nav class="navtop">
+        <div>
+            <h1>Quiz App</h1>
+            <a href="{{ url_for('home') }}"><i class="fas fa-home"></i>Página principal</a>
+            <a href="{{ url_for('profile') }}"><i class="fas fa-user-circle"></i>Perfil</a>
+            <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i>Logout</a>
+            <a href="{{ url_for('update') }}"><i class="fas fa-pen"></i>Alterar dados</a>
+            <a href="{{ url_for('addquestions') }}"><i class="fas fa-question"></i>Adicionar questões</a>
+        </div>
+    </nav>
+    <div class="addanswers">
+        <h1>Adicionar resposta</h1>
+        <form action="{{ url_for('addanswers') }}" method="post" autocomplete="off">
+
+            <label for="quizId">
+                <i class="fas fa-id-card"></i>
+            </label>
+            <input type="number" name="quizId" placeholder="ID Quiz" id="quizId" required>
+
+            <label for="questionId">
+                <i class="fas fa-id-card"></i>
+            </label>
+            <input type="number" name="questionId" placeholder="ID Pergunta" id="questionId" required>
+
+            <label for="active">
+                <i class="fas fa-id-card"></i>
+            </label>
+            <input type="number" name="active" placeholder="Activa?" id="active" required>
+
+            <label for="correct">
+                <i class="fas fa-id-card"></i>
+            </label>
+            <input type="number" name="correct" placeholder="Correcta?" id="correct" required>
+
+            <label for="createdAt">
+                <i class="fas fa-id-card"></i>
+            </label>
+            <input type="datetime" name="createdAt" placeholder="Data de criação" id="createdAt" required>
+
+            <label for="updatedAt">
+                <i class="fas fa-id-card"></i>
+            </label>
+            <input type="datetime" name="updatedAt" placeholder="Data de alteração" id="updatedAt">
+
+            <label for="content">
+                <i class="fas fa-id-card"></i>
+            </label>
+            <input type="text" name="content" placeholder="Conteúdo" id="content" required>
+
+            <div class="msg">{{ msg }}</div>
+            <input type="submit" value="Adicionar resposta">
+        </form>
+    </div>
+</body>
+
+</html>
