@@ -1,25 +1,23 @@
 <!DOCTYPE html> {% extends 'layout.html' %} {% block title %}Quiz{% endblock %} {% block content %}
 <h2>Quiz</h2>
-{% set i = 1 %}
 <div>
     <table>
 
         <tr>
-            {% for q in questions %}
-            <h3>{{ q[8] }}</h3>
-            <p>Cotação: {{ q[5] }}</p>
-            <p>Dificuldade: {{ q[4] }}</p>
+            {% for question in questions %}
+            <h3>{{ question[1] }}</h3>
         </tr>
         <tr>
-            {% for a in answers %}
-            <form>
-                {% if a[0] == i %}
-                <p><input type="radio" name="answer">{{ a[1] }}</p>
-                {% endif %}
-            </form>
+                {% for a in range(2,question|length) %}
+                <form>
+                <p><input type="radio" name="answer">{{ question[a] }}</p>
+                </form>
 
-            {% endfor %} {% set i = i + 1 %}
-            <hr style="border-bottom: 3px solid;"> {% endfor %}
+                {% endfor %}
+            <h3>Cotação: {{ question[0] }}</h3>
+
+            <hr style="border-bottom: 3px solid;">
+            {% endfor %}
         </tr>
     </table>
 </div>

@@ -4,6 +4,7 @@ import MySQLdb.cursors
 import re
 from dbconnect import connection
 from passlib.hash import sha256_crypt
+import random
 
 app = Flask(__name__)
 
@@ -244,13 +245,29 @@ def display_quizzes():
 def display_teste():
     if 'loggedin' in session:
         c, conn = connection()
-        query1 = "SELECT * from quiz_question"
+        query1 = "SELECT id,content,score from quiz_question"
         c.execute(query1)
-        questions = c.fetchall()
+        questions_data = c.fetchall()
         query2 = "SELECT questionId,content FROM quiz_answer"
         c.execute(query2)
-        answers = c.fetchall()
+        answers_data = c.fetchall()
         conn.close()
-        return render_template("teste.html", questions = questions, answers = answers)
-    return redirect(url_for('login'))
+        questions = []
+        for question in questions_data:
+            temp1 = []
+            temp = []
+            temp1.append(question[2])
+            temp1.append(question[1])
+            for answer in answers_data:
+                if answer[0] == question[0]:
+                    temp.append(answer[1])
+                    # randomizar respostas
+                    random.shuffle(temp)
+            for x in temp:
+                temp1.append(x)
+            questions.append(temp1)
+        # randomizar perguntas
+        random.shuffle(questions)
 
+        return render_template("teste.html", questions = questions)
+    return redirect(url_for('login'))
