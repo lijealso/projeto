@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
 from dbconnect import connection
+from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
 
@@ -30,10 +31,11 @@ def login():
         password = request.form['password']
         # Verificar se a conta existe
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password,))
+        cursor.execute('SELECT * FROM accounts WHERE username = %s', (username,))
         # Retorna resultado
         account = cursor.fetchone()
-        if account:
+        validatePassword = sha256_crypt.verify(password, account['password'])
+        if account and validatePassword:
             # Criar dados de sessão
             session['loggedin'] = True
             session['id'] = account['id']
@@ -56,6 +58,18 @@ def logout():
    # Redirect
    return redirect(url_for('login'))
 
+
+# http://localhost:5000/home
+# Página principal
+@app.route('/home')
+def home():
+    # VErificar se utilizar fez login
+    if 'loggedin' in session:
+        # Mostrar a página principal
+        return render_template('home.html', username=session['username'])
+    # Redirect
+    return redirect(url_for('login'))
+
 # http://localhost:5000/register
 # Página de registo
 @app.route('/register', methods=['GET', 'POST'])
@@ -66,7 +80,8 @@ def register():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
         # Criar variáveis
         username = request.form['username']
-        password = request.form['password']
+        password_form = request.form['password']
+        password = sha256_crypt.encrypt(password_form)
         email = request.form['email']
         # VErificar se conta existe
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -83,24 +98,13 @@ def register():
             msg = 'Preencha o formulário!'
         else:
             # Se tudo estiver bem, adicionar conta à base de dados
-            cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s)', (username, password, email,))
+            cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s)', (username, email, password,))
             mysql.connection.commit()
             msg = 'Registo efetuado com sucesso!'
     elif request.method == 'POST':
         # Formulário vazio
         msg = 'Please fill out the form!'
     return render_template('register.html', msg=msg)
-
-# http://localhost:5000/home
-# Página principal
-@app.route('/home')
-def home():
-    # VErificar se utilizar fez login
-    if 'loggedin' in session:
-        # Mostrar a página principal
-        return render_template('home.html', username=session['username'])
-    # Redirect
-    return redirect(url_for('login'))
 
 # http://localhost:5000/profile
 # Página de perfil
@@ -166,6 +170,32 @@ def addquestions():
         return render_template('addquestions.html', msg=msg)
     return redirect(url_for(addquestions))
 
+# http://localhost:5000/addanswers
+# Página de perfil
+@app.route('/addanswers', methods =['GET', 'POST'])
+def addanswers():
+    msg = ''
+    if 'loggedin' in session:
+        # Verificar se dados estão preenchidos
+        if request.method == 'POST' and 'quizId' in request.form and 'questionId' in request.form and 'active' in request.form and 'correct' in request.form and 'createdAt' in request.form and 'updatedAt' in request.form and 'content' in request.form:
+            # Criar variáveis
+            quizId = request.form['quizId']
+            questionId = request.form['questionId']
+            active = request.form['active']
+            correct = request.form['correct']
+            createdAt = request.form['createdAt']
+            updatedAt = request.form['updatedAt']
+            content = request.form['content']
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('INSERT INTO quiz_answer VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)', (quizId, questionId, active, correct, createdAt, updatedAt, content, ))
+            mysql.connection.commit()
+            msg = 'Resposta adicionada'
+        elif request.method == 'POST':
+            # Formulário vazio
+            msg = 'Preencha os dados!'
+        return render_template('addanswers.html', msg=msg)
+    return redirect(url_for(addanswers))
+
 @app.route('/list_users')       
 def display_users():
     if 'loggedin' in session:
@@ -175,5 +205,52 @@ def display_users():
         data = c.fetchall()
         conn.close()
         return render_template("list_users.html", data=data)
+    return redirect(url_for('login'))
+
+@app.route('/list_questions')       
+def display_questions():
+    if 'loggedin' in session:
+        c, conn = connection()
+        query = "SELECT * from quiz_question"
+        c.execute(query)
+        data = c.fetchall()
+        conn.close()
+        return render_template("list_questions.html", data=data)
+    return redirect(url_for('login'))
+
+@app.route('/list_answers')       
+def display_answers():
+    if 'loggedin' in session:
+        c, conn = connection()
+        query = "SELECT * from quiz_answer"
+        c.execute(query)
+        data = c.fetchall()
+        conn.close()
+        return render_template("list_answers.html", data=data)
+    return redirect(url_for('login'))
+
+@app.route('/list_quizzes')       
+def display_quizzes():
+    if 'loggedin' in session:
+        c, conn = connection()
+        query = "SELECT * from quiz"
+        c.execute(query)
+        data = c.fetchall()
+        conn.close()
+        return render_template("list_quizzes.html", data=data)
+    return redirect(url_for('login'))
+
+@app.route('/teste')
+def display_teste():
+    if 'loggedin' in session:
+        c, conn = connection()
+        query1 = "SELECT * from quiz_question"
+        c.execute(query1)
+        questions = c.fetchall()
+        query2 = "SELECT questionId,content FROM quiz_answer"
+        c.execute(query2)
+        answers = c.fetchall()
+        conn.close()
+        return render_template("teste.html", questions = questions, answers = answers)
     return redirect(url_for('login'))
 
