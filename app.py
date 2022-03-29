@@ -5,6 +5,10 @@ import re
 from dbconnect import connection
 from passlib.hash import sha256_crypt
 import random
+from slugify import slugify
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+from markupsafe import escape
 
 app = Flask(__name__)
 
@@ -18,6 +22,7 @@ app.config['MYSQL_DB'] = 'projeto'
 
 # Inicializar MySQL
 mysql = MySQL(app)
+
 
 # http://localhost:5000/login/
 # Página de login
@@ -47,6 +52,11 @@ def login():
             # Conta não existente ou dados incorretos
             msg = 'Dados incorretos!'
     return render_template('index.html', msg='')
+
+
+# class DateRangeForm(Form):
+#    start_date = DateField('Start', validators=[Required()], format = '%d/%m/%Y', description = 'Time that the event will occur', widget=widgets.DatePickerWidget)
+
 
 # http://localhost:5000/logout
 # Página de logout
@@ -109,17 +119,19 @@ def register():
 
 # http://localhost:5000/profile
 # Página de perfil
-@app.route('/profile')
-def profile():
+@app.route('/profile/<username>')
+def profile(username):
     # Verificar se utilizar fez login
     if 'loggedin' in session:
         # Buscar à base de dados a informação da conta
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE id = %s', (session['id'],))
         account = cursor.fetchone()
+        username = session['username']
         # Mostra a página de perfil com a informação da conta
-        return render_template('profile.html', account=account)
+        return render_template('profile.html', account=account, username = username)
     return redirect(url_for('login'))
+
 
 @app.route("/update", methods =['GET', 'POST'])
 def update():
@@ -245,13 +257,20 @@ def display_quizzes():
 def display_teste():
     if 'loggedin' in session:
         c, conn = connection()
-        query = "SELECT COUNT(id) FROM quiz"
-        c.execute(query)
-        number_quizzes = c.fetchone()
-        number_quizzes2 = number_quizzes[0]
+
+        q = "SELECT id FROM quiz"
+        c.execute(q)
+        d1 = c.fetchone()
+
         # escolher, aleatoriamente, quiz dentro da quantidade existente
-        random_quiz = random.randint(1, number_quizzes2)
-        query1 = "SELECT id,content,score FROM quiz_question WHERE quizId = %s" % random_quiz
+        # query = "SELECT COUNT(id) FROM quiz"
+        # c.execute(query)
+        # number_quizzes = c.fetchone()
+        # number_quizzes2 = number_quizzes[0]
+        # random_quiz = random.randint(1, number_quizzes2)
+        
+        query1 = "SELECT id,content,score FROM quiz_question"
+        # WHERE quizId = %s" % random_quiz
         c.execute(query1)
         questions_data = c.fetchall()
         query2 = "SELECT questionId,content FROM quiz_answer"
@@ -277,4 +296,5 @@ def display_teste():
 
         return render_template("teste.html", questions = questions)
     return redirect(url_for('login'))
+
 
