@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
@@ -9,10 +9,11 @@ from slugify import slugify
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from markupsafe import escape
+import secrets
 
 app = Flask(__name__)
 
-app.secret_key = 'segredo'
+app.secret_key = secrets.token_hex()
 
 # Informação para conexão à base de dados
 app.config['MYSQL_HOST'] = 'localhost'
@@ -46,6 +47,7 @@ def login():
             session['loggedin'] = True
             session['id'] = account['id']
             session['username'] = account['username']
+            flash("Login successful")
             # Redirecionar para página principal
             return redirect(url_for('home'))
         else:
@@ -94,6 +96,7 @@ def register():
         password_form = request.form['password']
         password = sha256_crypt.encrypt(password_form)
         email = request.form['email']
+        isAdmin = 0
         # VErificar se conta existe
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE username = %s', (username,))
@@ -109,7 +112,7 @@ def register():
             msg = 'Preencha o formulário!'
         else:
             # Se tudo estiver bem, adicionar conta à base de dados
-            cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s)', (username, email, password,))
+            cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s, %s)', (username, email, password, isAdmin,))
             mysql.connection.commit()
             msg = 'Registo efetuado com sucesso!'
     elif request.method == 'POST':
@@ -140,7 +143,8 @@ def update():
         if request.method == 'POST' and 'username' in request.form and 'email' in request.form and 'password' in request.form:
             username = request.form['username']
             email = request.form['email']
-            password = request.form['password']
+            password_form = request.form['password']
+            password = sha256_crypt.encrypt(password_form)
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM accounts WHERE username = %s', (username, ))
             account = cursor.fetchone()
@@ -253,14 +257,10 @@ def display_quizzes():
         return render_template("list_quizzes.html", data=data)
     return redirect(url_for('login'))
 
-@app.route('/teste')
-def display_teste():
+@app.route('/teste/<id>')
+def display_teste(id):
     if 'loggedin' in session:
         c, conn = connection()
-
-        q = "SELECT id FROM quiz"
-        c.execute(q)
-        d1 = c.fetchone()
 
         # escolher, aleatoriamente, quiz dentro da quantidade existente
         # query = "SELECT COUNT(id) FROM quiz"
@@ -293,6 +293,10 @@ def display_teste():
             questions.append(temp1)
         # randomizar perguntas
         random.shuffle(questions)
+
+    # ainda vai buscar todas as perguntas, de todos os quizzes
+    # portanto, teste/1, teste/2, teste/3, etc, apresentam todas as perguntas
+    # como resolver para ir buscar só um quiz e apresentar no url pretendido ?
 
         return render_template("teste.html", questions = questions)
     return redirect(url_for('login'))

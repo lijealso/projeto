@@ -11,11 +11,12 @@
 <body class="loggedin">
     <nav class="navtop">
         <div>
-            <h1>Web Quizz</h1>
+            <h1>Quiz App</h1>
             <a href="{{ url_for('home') }}"><i class="fas fa-home"></i>Página principal</a>
             <a href="{{ url_for('profile', username=username) }}"><i class="fas fa-user-circle"></i>Perfil</a>
             <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i>Logout</a>
-            <a href="{{ url_for('update') }}"><i class="fas fa-book"></i>Atualizar perfil</a>
+            <a href="{{ url_for('update') }}"><i class="fas fa-pen"></i>Alterar dados</a>
+            <a href="{{ url_for('addquestions') }}"><i class="fas fa-question"></i>Adicionar questões</a>
         </div>
     </nav>
     <div class="register">
