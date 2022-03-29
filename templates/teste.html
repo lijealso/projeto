@@ -8,16 +8,15 @@
             <h3>{{ question[1] }}</h3>
         </tr>
         <tr>
-                {% for a in range(2,question|length) %}
-                <form>
+            {% for a in range(2,question|length) %}
+            <form>
                 <p><input type="radio" name="answer">{{ question[a] }}</p>
-                </form>
+            </form>
 
-                {% endfor %}
+            {% endfor %}
             <h3>Cotação: {{ question[0] }}</h3>
 
-            <hr style="border-bottom: 3px solid;">
-            {% endfor %}
+            <hr style="border-bottom: 3px solid;"> {% endfor %}
         </tr>
     </table>
 </div>
