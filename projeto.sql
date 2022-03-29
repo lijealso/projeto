@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 25, 2022 at 09:43 PM
+-- Generation Time: Mar 29, 2022 at 03:48 PM
 -- Server version: 8.0.28
 -- PHP Version: 7.4.28
 
@@ -31,16 +31,17 @@ CREATE TABLE `accounts` (
   `id` bigint NOT NULL,
   `username` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `isAdmin` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `username`, `email`, `password`) VALUES
-(1, 'admin', 'zadmin@admin.com', 'admin'),
-(2, 'rui', 'rui@gmail.com', 'admin');
+INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `isAdmin`) VALUES
+(12, 'teste', 'teste@teste.pt', '$5$rounds=535000$4xkvL/ihCYBePgQS$E9hc6/eyZeV12hHo.0cIMUaCmXo/m1wXSEGpIRXZ.LC', 1),
+(13, 'administrador', 'admin@admin.pt', '$5$rounds=535000$yYEVFrvalMWHYIh6$iFswRKsXxF6ez7lpHXdtyS9lEE8QD8WJgIFq1pIGsW2', 0);
 
 -- --------------------------------------------------------
 
@@ -71,7 +72,8 @@ CREATE TABLE `quiz` (
 --
 
 INSERT INTO `quiz` (`id`, `hostId`, `title`, `metaTitle`, `slug`, `summary`, `type`, `score`, `published`, `createdAt`, `updatedAt`, `publishedAt`, `startsAt`, `endsAt`, `content`) VALUES
-(1, 1, 'eee', 'eee', 'ddd', 'ewqeqwe', 1, 1, 1, '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', 'dsds');
+(1, 12, 'eee', 'eee', 'ddd', 'ewqeqwe', 1, 1, 1, '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', 'dsds'),
+(2, 12, 'titulo', 'meta', 'slug', 'resumo', 1, 20, 1, '2022-03-28 17:53:18', NULL, NULL, NULL, NULL, 'conteúdo');
 
 -- --------------------------------------------------------
 
@@ -89,6 +91,25 @@ CREATE TABLE `quiz_answer` (
   `updatedAt` datetime DEFAULT NULL,
   `content` text COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `quiz_answer`
+--
+
+INSERT INTO `quiz_answer` (`id`, `quizId`, `questionId`, `active`, `correct`, `createdAt`, `updatedAt`, `content`) VALUES
+(1, 1, 1, 1, 1, '2022-03-25 23:19:36', NULL, 'Red'),
+(2, 1, 1, 1, 0, '2022-03-25 23:20:55', NULL, 'Brown'),
+(3, 1, 1, 1, 0, '2022-03-25 23:21:32', NULL, 'Blue'),
+(4, 1, 2, 1, 1, '2022-03-26 11:59:12', NULL, 'Iberian'),
+(5, 1, 2, 1, 0, '2022-03-26 11:59:48', NULL, 'Sinai'),
+(6, 1, 2, 1, 0, '2022-03-26 12:00:09', NULL, 'Ligurian'),
+(7, 1, 2, 1, 0, '2022-03-26 21:32:19', '2022-03-26 21:32:19', 'Crimean'),
+(10, 1, 10, 1, 1, '2022-03-28 15:38:32', NULL, 'Scotland'),
+(11, 1, 10, 1, 0, '2022-03-28 15:39:14', NULL, 'England'),
+(12, 1, 10, 1, 0, '2022-03-28 15:39:34', NULL, 'Ireland'),
+(13, 2, 11, 1, 1, '2022-03-28 17:57:00', NULL, 'South Africa'),
+(14, 2, 11, 1, 0, '2022-03-28 17:57:41', NULL, 'Nigeria'),
+(15, 2, 11, 1, 0, '2022-03-28 17:58:03', NULL, 'Australia');
 
 -- --------------------------------------------------------
 
@@ -112,7 +133,7 @@ CREATE TABLE `quiz_meta` (
 CREATE TABLE `quiz_question` (
   `id` bigint NOT NULL,
   `quizId` bigint NOT NULL,
-  `type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `level` smallint NOT NULL DEFAULT '0',
   `score` smallint NOT NULL DEFAULT '0',
@@ -125,11 +146,11 @@ CREATE TABLE `quiz_question` (
 -- Dumping data for table `quiz_question`
 --
 
-INSERT INTO `quiz_question` (`id`, `quizId`, `type`, `active`, `level`, `score`, `createdAt`, `updatedAt`, `content`) VALUES
-(1, 1, 'wqwq', 1, 1, 1, '2022-03-24 22:46:56', '2022-03-24 22:46:56', 'sasa'),
-(6, 1, 'wqwqw', 1, 1, 1, '2022-03-24 22:46:56', '2022-03-24 22:46:56', 'dsdsds'),
-(7, 1, '2', 2, 1, 2, '2022-03-24 23:09:01', '2022-03-24 23:09:01', 'dasd'),
-(8, 1, '2', 2, 1, 2, '2022-03-24 23:09:01', '2022-03-24 23:09:01', 'dasd');
+INSERT INTO `quiz_question` (`id`, `quizId`, `category`, `active`, `level`, `score`, `createdAt`, `updatedAt`, `content`) VALUES
+(1, 1, 'multiple-choice', 1, 2, 3, '2022-03-24 22:46:56', '2022-03-24 22:46:56', 'What is your favorite primary color?'),
+(2, 1, 'multiple-choice', 1, 1, 2, '2022-03-26 11:20:00', '2022-03-26 11:20:00', 'What is the name of the peninsula that Spain and Portugal occupy?'),
+(10, 1, 'multiple-choice', 1, 1, 2, '2022-03-28 15:37:44', NULL, 'Supposedly home to a “monster,” Loch Ness is one of many inland seas—or “lochs”—in which country?'),
+(11, 2, 'multiple-choice', 1, 2, 4, '2022-03-28 17:56:08', NULL, 'Which country has three capital cities—Pretoria, Cape Town, and Bloemfontein?');
 
 -- --------------------------------------------------------
 
@@ -148,6 +169,23 @@ CREATE TABLE `take` (
   `updatedAt` datetime DEFAULT NULL,
   `startedAt` datetime DEFAULT NULL,
   `finishedAt` datetime DEFAULT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `take_answer`
+--
+
+CREATE TABLE `take_answer` (
+  `id` bigint NOT NULL,
+  `takeId` bigint NOT NULL,
+  `questionId` bigint NOT NULL,
+  `answerId` bigint NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '0',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime DEFAULT NULL,
   `content` text COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -201,6 +239,15 @@ ALTER TABLE `take`
   ADD KEY `idx_take_quiz` (`quizId`);
 
 --
+-- Indexes for table `take_answer`
+--
+ALTER TABLE `take_answer`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_answer_take` (`takeId`),
+  ADD KEY `idx_tanswer_question` (`questionId`),
+  ADD KEY `idx_tanswer_answer` (`answerId`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -208,19 +255,19 @@ ALTER TABLE `take`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `quiz`
 --
 ALTER TABLE `quiz`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `quiz_answer`
 --
 ALTER TABLE `quiz_answer`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `quiz_meta`
@@ -232,12 +279,18 @@ ALTER TABLE `quiz_meta`
 -- AUTO_INCREMENT for table `quiz_question`
 --
 ALTER TABLE `quiz_question`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `take`
 --
 ALTER TABLE `take`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `take_answer`
+--
+ALTER TABLE `take_answer`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
@@ -275,6 +328,14 @@ ALTER TABLE `quiz_question`
 ALTER TABLE `take`
   ADD CONSTRAINT `fk_take_quiz` FOREIGN KEY (`quizId`) REFERENCES `quiz` (`id`),
   ADD CONSTRAINT `fk_take_user` FOREIGN KEY (`userId`) REFERENCES `accounts` (`id`);
+
+--
+-- Constraints for table `take_answer`
+--
+ALTER TABLE `take_answer`
+  ADD CONSTRAINT `fk_answer_take` FOREIGN KEY (`takeId`) REFERENCES `take` (`id`),
+  ADD CONSTRAINT `fk_tanswer_answer` FOREIGN KEY (`answerId`) REFERENCES `quiz_answer` (`id`),
+  ADD CONSTRAINT `fk_tanswer_question` FOREIGN KEY (`questionId`) REFERENCES `quiz_question` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
