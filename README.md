@@ -13,3 +13,7 @@
 - passlib            1.7.4
 - python-slugify     6.1.1
 - MarkupSafe         2.1.1
+
+# database schema
+
+<img width="700" alt="Database Schema" src="https://raw.githubusercontent.com/lijealso/projeto/main/database_schema.jpg">
