@@ -21,62 +21,52 @@
     </nav>
     <div class="addquestions">
         <h1>Adicionar questão</h1>
-        <form class="form-inline" action="{{ url_for('addquestions') }}" method="post" autocomplete="off">
-            <div class="form-group">
-                <div class="input-group">
-                    <label for="quizId">
+        <form action="{{ url_for('addquestions') }}" method="post" autocomplete="off">
+
+            <label for="quizId">
                 <i class="fas fa-id-card"></i>
             </label>
-                    <select name="comp_select" class="selectpicker form-control">
-                        {% for o in data %}
-                            <option value="{{ o[0] }}">{{ o[0] }}</option>
-                        {% endfor %}                                              
-                    </select>
+            <input type="number" name="quizId" placeholder="Quiz ID" id="quizId" required>
 
-                    <label for="quizId">
-                <i class="fas fa-id-card"></i>
-            </label>
-                    <input type="number" name="quizId" placeholder="Quiz ID" id="quizId" required>
-
-                    <label for="type">
+            <label for="type">
                 <i class="fas fa-question-circle"></i>
             </label>
-                    <input type="text" name="type" placeholder="Tipo" id="type" required>
+            <input type="text" name="type" placeholder="Tipo" id="type" required>
 
-                    <label for="active">
+            <label for="active">
                 <i class="fas fa-running"></i>
             </label>
-                    <input type="number" name="active" placeholder="Activa" id="active" required>
+            <input type="number" name="active" placeholder="Activa" id="active" required>
 
-                    <label for="level">
+            <label for="level">
                 <i class="fas fa-level-up-alt"></i>
             </label>
-                    <input type="number" name="level" placeholder="Dificuldade" id="level" required>
+            <input type="number" name="level" placeholder="Dificuldade" id="level" required>
 
-                    <label for="score">
+            <label for="score">
                 <i class="fas fa-level-down-alt"></i>
             </label>
-                    <input type="number" name="score" placeholder="Cotação" id="score" required>
+            <input type="number" name="score" placeholder="Cotação" id="score" required>
 
-                    <label for="createdAt">
+            <label for="createdAt">
                 <i class="fas fa-calendar-times"></i>
             </label>
-                    <input type="datetime-local" name="createdAt" placeholder="Data de criação" id="createdAt" required>
+            <input type="datetime-local" name="createdAt" placeholder="Data de criação" id="createdAt" required>
 
-                    <label for="updatedAt">
+            <label for="updatedAt">
                 <i class="fas fa-calendar"></i>
             </label>
-                    <input type="datetime-local" name="updatedAt" placeholder="Data de alteração" id="updatedAt">
+            <input type="datetime-local" name="updatedAt" placeholder="Data de alteração" id="updatedAt">
 
-                    <label for="content">
+            <label for="content">
                 <i class="fas fa-folder-open"></i>
             </label>
-                    <input type="text" name="content" placeholder="Conteúdo" id="content" required>
+            <input type="text" name="content" placeholder="Conteúdo" id="content" required>
 
-                    <div class="msg">{{ msg }}</div>
-                    <input type="submit" value="Adicionar questão">
+            <div class="msg">{{ msg }}</div>
+            <input type="submit" value="Adicionar questão">
         </form>
-        </div>
+    </div>
 </body>
 
 </html>
