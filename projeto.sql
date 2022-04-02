@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 29, 2022 at 03:48 PM
+-- Generation Time: Apr 02, 2022 at 03:25 PM
 -- Server version: 8.0.28
 -- PHP Version: 7.4.28
 
@@ -41,7 +41,7 @@ CREATE TABLE `accounts` (
 
 INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `isAdmin`) VALUES
 (12, 'teste', 'teste@teste.pt', '$5$rounds=535000$4xkvL/ihCYBePgQS$E9hc6/eyZeV12hHo.0cIMUaCmXo/m1wXSEGpIRXZ.LC', 1),
-(13, 'administrador', 'admin@admin.pt', '$5$rounds=535000$yYEVFrvalMWHYIh6$iFswRKsXxF6ez7lpHXdtyS9lEE8QD8WJgIFq1pIGsW2', 0);
+(13, 'administrador', 'admin@admin.pt', '$5$rounds=535000$yYEVFrvalMWHYIh6$iFswRKsXxF6ez7lpHXdtyS9lEE8QD8WJgIFq1pIGsW2', 1);
 
 -- --------------------------------------------------------
 
@@ -56,7 +56,7 @@ CREATE TABLE `quiz` (
   `metaTitle` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `slug` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `summary` tinytext COLLATE utf8mb4_unicode_ci,
-  `type` smallint NOT NULL DEFAULT '0',
+  `module` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `score` smallint NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '0',
   `createdAt` datetime NOT NULL,
@@ -71,9 +71,9 @@ CREATE TABLE `quiz` (
 -- Dumping data for table `quiz`
 --
 
-INSERT INTO `quiz` (`id`, `hostId`, `title`, `metaTitle`, `slug`, `summary`, `type`, `score`, `published`, `createdAt`, `updatedAt`, `publishedAt`, `startsAt`, `endsAt`, `content`) VALUES
-(1, 12, 'eee', 'eee', 'ddd', 'ewqeqwe', 1, 1, 1, '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', 'dsds'),
-(2, 12, 'titulo', 'meta', 'slug', 'resumo', 1, 20, 1, '2022-03-28 17:53:18', NULL, NULL, NULL, NULL, 'conteúdo');
+INSERT INTO `quiz` (`id`, `hostId`, `title`, `metaTitle`, `slug`, `summary`, `module`, `score`, `published`, `createdAt`, `updatedAt`, `publishedAt`, `startsAt`, `endsAt`, `content`) VALUES
+(1, 12, 'eee', 'eee', 'ddd', 'ewqeqwe', '1', 1, 1, '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', 'dsds'),
+(2, 12, 'titulo', 'meta', 'slug', 'resumo', '1', 20, 1, '2022-03-28 17:53:18', NULL, NULL, NULL, NULL, 'conteúdo');
 
 -- --------------------------------------------------------
 
@@ -133,7 +133,7 @@ CREATE TABLE `quiz_meta` (
 CREATE TABLE `quiz_question` (
   `id` bigint NOT NULL,
   `quizId` bigint NOT NULL,
-  `category` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `level` smallint NOT NULL DEFAULT '0',
   `score` smallint NOT NULL DEFAULT '0',
@@ -146,10 +146,10 @@ CREATE TABLE `quiz_question` (
 -- Dumping data for table `quiz_question`
 --
 
-INSERT INTO `quiz_question` (`id`, `quizId`, `category`, `active`, `level`, `score`, `createdAt`, `updatedAt`, `content`) VALUES
+INSERT INTO `quiz_question` (`id`, `quizId`, `type`, `active`, `level`, `score`, `createdAt`, `updatedAt`, `content`) VALUES
 (1, 1, 'multiple-choice', 1, 2, 3, '2022-03-24 22:46:56', '2022-03-24 22:46:56', 'What is your favorite primary color?'),
 (2, 1, 'multiple-choice', 1, 1, 2, '2022-03-26 11:20:00', '2022-03-26 11:20:00', 'What is the name of the peninsula that Spain and Portugal occupy?'),
-(10, 1, 'multiple-choice', 1, 1, 2, '2022-03-28 15:37:44', NULL, 'Supposedly home to a “monster,” Loch Ness is one of many inland seas—or “lochs”—in which country?'),
+(10, 1, 'multiple-choice', 1, 1, 3, '2022-03-28 15:37:44', NULL, 'Supposedly home to a “monster,” Loch Ness is one of many inland seas—or “lochs”—in which country?'),
 (11, 2, 'multiple-choice', 1, 2, 4, '2022-03-28 17:56:08', NULL, 'Which country has three capital cities—Pretoria, Cape Town, and Bloemfontein?');
 
 -- --------------------------------------------------------
