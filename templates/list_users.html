@@ -13,14 +13,12 @@
     <tbody>
         {% for row in data %}
         <tr>
-            {% for d in row %}
-                {% if loop.index == 1 %}
-                <!-- urls estão corretos, mas apresenta sempre a informação do user logado -->
-                    <td><a href="/profile/{{ row[1] }}">{{ d }}</a></td>
-                {% else %}
-                    <td>{{ d }}</td>
-                {% endif %}
-            {% endfor %}
+            {% for d in row %} {% if loop.index == 1 %}
+            <!-- urls estão corretos, mas apresenta sempre a informação do user logado -->
+            <td><a href="/profile/{{ row[1] }}">{{ d }}</a></td>
+            {% else %}
+            <td>{{ d }}</td>
+            {% endif %} {% endfor %}
         </tr>
         {% endfor %}
     </tbody>
@@ -30,6 +28,9 @@
     $(document).ready(function() {
         $('#data').DataTable({
             columns: [{
+                orderable: true,
+                searchable: true
+            }, {
                 orderable: true,
                 searchable: true
             }, {
