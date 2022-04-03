@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 02, 2022 at 03:25 PM
+-- Generation Time: Apr 03, 2022 at 09:22 PM
 -- Server version: 8.0.28
 -- PHP Version: 7.4.28
 
@@ -72,8 +72,8 @@ CREATE TABLE `quiz` (
 --
 
 INSERT INTO `quiz` (`id`, `hostId`, `title`, `metaTitle`, `slug`, `summary`, `module`, `score`, `published`, `createdAt`, `updatedAt`, `publishedAt`, `startsAt`, `endsAt`, `content`) VALUES
-(1, 12, 'eee', 'eee', 'ddd', 'ewqeqwe', '1', 1, 1, '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', '2022-03-24 22:46:56', 'dsds'),
-(2, 12, 'titulo', 'meta', 'slug', 'resumo', '1', 20, 1, '2022-03-28 17:53:18', NULL, NULL, NULL, NULL, 'conteúdo');
+(1, 13, 'eee', 'eee', 'ddd', 'ewqeqwe', 'Python', 200, 1, '2022-03-24 22:46:56', '2022-04-03 22:46:56', '2022-03-24 22:46:56', '2022-04-30 14:00:00', '2022-04-30 15:00:00', 'Python'),
+(2, 12, 'HTML', 'meta', 'slug', 'resumo', 'HTML', 200, 1, '2022-03-28 17:53:18', '2022-04-03 22:14:39', '2022-04-03 22:21:23', '2022-04-30 16:00:00', '2022-04-30 17:00:00', 'HTML');
 
 -- --------------------------------------------------------
 
@@ -97,19 +97,19 @@ CREATE TABLE `quiz_answer` (
 --
 
 INSERT INTO `quiz_answer` (`id`, `quizId`, `questionId`, `active`, `correct`, `createdAt`, `updatedAt`, `content`) VALUES
-(1, 1, 1, 1, 1, '2022-03-25 23:19:36', NULL, 'Red'),
-(2, 1, 1, 1, 0, '2022-03-25 23:20:55', NULL, 'Brown'),
-(3, 1, 1, 1, 0, '2022-03-25 23:21:32', NULL, 'Blue'),
-(4, 1, 2, 1, 1, '2022-03-26 11:59:12', NULL, 'Iberian'),
-(5, 1, 2, 1, 0, '2022-03-26 11:59:48', NULL, 'Sinai'),
-(6, 1, 2, 1, 0, '2022-03-26 12:00:09', NULL, 'Ligurian'),
-(7, 1, 2, 1, 0, '2022-03-26 21:32:19', '2022-03-26 21:32:19', 'Crimean'),
-(10, 1, 10, 1, 1, '2022-03-28 15:38:32', NULL, 'Scotland'),
-(11, 1, 10, 1, 0, '2022-03-28 15:39:14', NULL, 'England'),
-(12, 1, 10, 1, 0, '2022-03-28 15:39:34', NULL, 'Ireland'),
-(13, 2, 11, 1, 1, '2022-03-28 17:57:00', NULL, 'South Africa'),
-(14, 2, 11, 1, 0, '2022-03-28 17:57:41', NULL, 'Nigeria'),
-(15, 2, 11, 1, 0, '2022-03-28 17:58:03', NULL, 'Australia');
+(1, 1, 1, 1, 1, '2022-03-25 23:19:36', '2022-04-03 22:01:37', 'print(\"Hello World\")'),
+(2, 1, 1, 1, 0, '2022-03-25 23:20:55', '2022-04-03 22:10:34', 'echo(\"Hello World\");'),
+(3, 1, 1, 1, 0, '2022-03-25 23:21:32', '2022-04-03 22:10:42', 'p(\"Hello World\")'),
+(4, 1, 2, 1, 1, '2022-03-26 11:59:12', '2022-04-03 22:10:24', '# This is a comment'),
+(5, 1, 2, 1, 0, '2022-03-26 11:59:48', '2022-04-03 22:10:14', '/* This is a comment */'),
+(6, 1, 2, 1, 0, '2022-03-26 12:00:09', '2022-04-03 22:09:43', '// This is a comment'),
+(7, 1, 2, 1, 0, '2022-03-26 21:32:19', '2022-04-03 21:32:19', '<!-- This is a comment -->'),
+(10, 1, 10, 1, 1, '2022-03-28 15:38:32', '2022-04-03 22:12:04', 'my-var'),
+(11, 1, 10, 1, 0, '2022-03-28 15:39:14', '2022-04-03 22:12:36', 'my_var'),
+(12, 1, 10, 1, 0, '2022-03-28 15:39:34', '2022-04-03 22:13:26', '_myvar'),
+(13, 2, 11, 1, 0, '2022-03-28 17:57:00', '2022-04-03 22:16:51', 'Hyperlinks and Text Markup Language'),
+(14, 2, 11, 1, 1, '2022-03-28 17:57:41', '2022-04-03 22:17:48', 'Hyper Text Markup Language'),
+(15, 2, 11, 1, 0, '2022-03-28 17:58:03', '2022-04-03 22:18:33', 'Home Tool Markup Language');
 
 -- --------------------------------------------------------
 
@@ -147,10 +147,10 @@ CREATE TABLE `quiz_question` (
 --
 
 INSERT INTO `quiz_question` (`id`, `quizId`, `type`, `active`, `level`, `score`, `createdAt`, `updatedAt`, `content`) VALUES
-(1, 1, 'multiple-choice', 1, 2, 3, '2022-03-24 22:46:56', '2022-03-24 22:46:56', 'What is your favorite primary color?'),
-(2, 1, 'multiple-choice', 1, 1, 2, '2022-03-26 11:20:00', '2022-03-26 11:20:00', 'What is the name of the peninsula that Spain and Portugal occupy?'),
-(10, 1, 'multiple-choice', 1, 1, 3, '2022-03-28 15:37:44', NULL, 'Supposedly home to a “monster,” Loch Ness is one of many inland seas—or “lochs”—in which country?'),
-(11, 2, 'multiple-choice', 1, 2, 4, '2022-03-28 17:56:08', NULL, 'Which country has three capital cities—Pretoria, Cape Town, and Bloemfontein?');
+(1, 1, 'multiple-choice', 1, 2, 2, '2022-03-24 22:46:56', '2022-03-24 22:46:56', 'What is a correct syntax to output \"Hello World\" in Python?'),
+(2, 1, 'multiple-choice', 1, 1, 2, '2022-03-26 11:20:00', '2022-04-03 11:20:00', 'How do you insert COMMENTS in Python code?'),
+(10, 1, 'multiple-choice', 1, 1, 3, '2022-03-28 15:37:44', '2022-04-03 22:11:35', 'Which one is NOT a legal variable name?'),
+(11, 2, 'multiple-choice', 1, 2, 4, '2022-03-28 17:56:08', '2022-04-03 22:14:10', 'What does HTML stand for?');
 
 -- --------------------------------------------------------
 
